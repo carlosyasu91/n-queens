@@ -41,6 +41,7 @@ window.countNRooksSolutions = function(n) {
   var counter = 0; 
   var solutionList = []; 
   var helper = function(board, startingIndex){
+    console.log(n);
     // //console.log(board);
     //console.log("start of recursion, board is " +JSON.stringify(board));
     var rows = board.rows(); //is this any different from a regular nest array?
@@ -75,7 +76,6 @@ window.countNRooksSolutions = function(n) {
             } else {
               var copy = JSON.parse(JSON.stringify(board));
               copy = Object.create(board);
-                  console.log("recurssing");
                   //console.log("before recursion board is " +JSON.stringify(copy));
               helper(copy);
             }
