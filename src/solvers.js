@@ -12,32 +12,8 @@
 
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
-
-window.findNRooksSolution = function(n) {
-  var board = new Board({n: n});
-  var solution;
-  var counter = 0;
-  findSolution(0, n, board, "hasAnyRooksConflicts", function(){
-    solution = _.map(board.rows(), function(row){
-      return row.slice();
-    });
-  });
-  return solution;
-};
-
-// return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
-window.countNRooksSolutions = function(n) {
-  var board = new Board({n: n});
-  var solutions = 0; 
-  var counter = 0;
-  var solutionList = [];
-  findSolution(0, n, board, "hasAnyRooksConflicts", function(){
-    solutions++;
-  });
-  return solutions;
-};
-
 window.findSolution = function(row, n, board, functionToCall, callback){
+  var finished = false;
   if(row === n){
     callback();
     return;
@@ -47,18 +23,40 @@ window.findSolution = function(row, n, board, functionToCall, callback){
     if(!board[functionToCall]()){
       findSolution(row+1, n, board, functionToCall, callback);
     }
-    board.togglePiece(row, i);
+    console.log(finished);
+    if (!false){
+      board.togglePiece(row, i);
+    }
   }
 };
 
+window.findNRooksSolution = function(n) {
+  var board = new Board({n: n});
+  var solution;
+  findSolution(0, n, board, "hasAnyRooksConflicts", function(){
+    finished = true;
+    console.log("inside finish is " +finished);
+    });
+  return board.rows();
+};
+
+// return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
+window.countNRooksSolutions = function(n) {
+  var board = new Board({n: n});
+  var solutions = 0; 
+  var solutionList = [];
+  findSolution(0, n, board, "hasAnyRooksConflicts", function(){
+    solutions++;
+  });
+  return solutions;
+};
+
+
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n){  
-  console.log(n);
   var board = new Board({n: n}); 
   var solution = board.rows(); 
-  console.log(n);
   findSolution(0, n, board, "hasAnyQueensConflicts", function(){
-  
     solution = _.map(board.rows(), function(row){
       return row.slice();
     });
